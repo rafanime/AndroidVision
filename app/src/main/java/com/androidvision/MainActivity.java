@@ -2,13 +2,22 @@ package com.androidvision;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
+
+import com.androidvision.Camera.CameraPreview;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Camera myCamera;
+    private CameraPreview myPreview;
+    private FrameLayout preview;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("Success -> " , " We have camera permission");
+                    startCamera();
 
                 } else {
                 }
@@ -53,6 +63,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void startCamera () {
+        // Create an instance of Camera
+        myCamera = getCameraInstance();
 
+        // Create our Preview view and set it as the content of our activity.
+        myPreview = new CameraPreview(this, myCamera);
+
+        preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.addView(myPreview);
+    }
+
+    private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+
+    /** A safe way to get an instance of the Camera object. */
+    public static Camera getCameraInstance(){
+        Camera c = null;
+        try {
+            c = Camera.open(camId); // attempt to get a Camera instance
+            c.setDisplayOrientation(90);
+        }
+        catch (Exception e){
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
+
+    private void stopCamera() {
+        if (myCamera != null){
+            preview.removeView(myPreview);
+            myCamera.release();
+            myCamera = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startCamera();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopCamera();
+    }
 
 }
