@@ -25,6 +25,13 @@
             android:layout_height="wrap_content"
             />
 
+        <Button
+            android:id="@+id/Switch"
+            android:text="Switch Camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -8,11 +8,6 @@ import android.view.SurfaceView;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by rafanime on 23/01/2017.
- */
-
-/** A basic Camera preview class */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private Camera mCamera;
@@ -24,6 +19,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mHolder = getHolder();
         mHolder.addCallback(this);
 
+        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
@@ -52,20 +48,24 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         try {
+            //set the focusable true
+            this.setFocusable(true);
+            //set the touch able true
+            this.setFocusableInTouchMode(true);
+            //set the camera display orientation lock
+            mCamera.setDisplayOrientation(90);
+
             Camera.Parameters params = mCamera.getParameters();
             List<Camera.Size> sizes = params.getSupportedPreviewSizes();
             Camera.Size optimalSize = getOptimalPreviewSize(sizes,w,h);
             params.setPreviewSize(optimalSize.width,optimalSize.height);
-
-            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-
 
             mCamera.setParameters(params);
 
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
             mCamera.autoFocus(null);
-            
+
         } catch (Exception e){
 
         }

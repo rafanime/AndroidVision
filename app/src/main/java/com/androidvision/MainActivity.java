@@ -1,30 +1,42 @@
 package com.androidvision;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.androidvision.Camera.CameraPreview;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private Camera myCamera;
     private CameraPreview myPreview;
     private FrameLayout preview;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermissions();
+
+        Button switchButton = (Button) findViewById(R.id.Switch);
+        switchButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        switchCamera();
+                        stopCamera();
+                        checkPermissions();
+                    }
+                }
+        );
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
@@ -65,17 +77,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startCamera () {
-        // Create an instance of Camera
         myCamera = getCameraInstance();
 
-        // Create our Preview view and set it as the content of our activity.
         myPreview = new CameraPreview(this, myCamera);
 
         preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(myPreview);
     }
 
-    private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private static int camId = Camera.CameraInfo.CAMERA_FACING_FRONT;
 
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance(){
@@ -110,9 +120,18 @@ public class MainActivity extends AppCompatActivity {
         stopCamera();
     }
 
+    public void switchCamera(){
+        if (camId == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            camId = Camera.CameraInfo.CAMERA_FACING_FRONT;
+        }else {
+            camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+        }
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+
         if (hasFocus) {
             findViewById(R.id.full_view).setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
