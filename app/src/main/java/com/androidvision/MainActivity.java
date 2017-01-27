@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
                 }
         );
 
-        
+
         // Add a listener to the Capture button
         Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
@@ -237,8 +237,4 @@ public class MainActivity extends Activity {
 
         return mediaFile;
     }
-
-
-
-
 }
