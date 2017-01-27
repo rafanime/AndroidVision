@@ -101,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startCamera();
+
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.CAMERA);
+
+        if(permissionCheck == PackageManager.PERMISSION_GRANTED) startCamera();
     }
 
     @Override
