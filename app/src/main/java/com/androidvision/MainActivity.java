@@ -17,6 +17,8 @@ import android.widget.FrameLayout;
 
 import com.androidvision.Camera.CameraPreview;
 
+import org.opencv.android.Camera2Renderer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -62,7 +64,6 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
