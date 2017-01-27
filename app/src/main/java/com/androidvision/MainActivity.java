@@ -24,6 +24,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         checkPermissions();
 
         Button switchButton = (Button) findViewById(R.id.Switch);
@@ -37,6 +39,7 @@ public class MainActivity extends Activity {
                     }
                 }
         );
+
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
@@ -111,7 +114,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        startCamera();
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.CAMERA);
+
+        if(permissionCheck == PackageManager.PERMISSION_GRANTED) startCamera();
     }
 
     @Override
