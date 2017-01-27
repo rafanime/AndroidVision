@@ -17,8 +17,6 @@ import android.widget.FrameLayout;
 
 import com.androidvision.Camera.CameraPreview;
 
-import org.opencv.android.Camera2Renderer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -51,6 +49,7 @@ public class MainActivity extends Activity {
                 }
         );
 
+        
         // Add a listener to the Capture button
         Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
