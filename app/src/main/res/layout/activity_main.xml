@@ -6,13 +6,19 @@
     android:id="@+id/full_view"
     >
 
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="0.3">
 
-    <org.opencv.android.JavaCameraView
+    <com.androidvision.PortraitCameraView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="0.3"
+        android:visibility="gone"
+
         android:id="@+id/camera_preview" />
 
+</FrameLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -33,6 +39,19 @@
             android:layout_height="wrap_content"
             />
 
+        <Button
+            android:id="@+id/Threshold"
+            android:text="Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/Grey"
+            android:text="Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
 </LinearLayout>
