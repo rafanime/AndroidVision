@@ -14,25 +14,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermissions();
+        checkPermission(Manifest.permission.CAMERA, MY_PERMISSIONS_REQUEST_CAMERA);
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+    private boolean checkPermission(String permission, int request){
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
+                permission);
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permission},
+                    request);
+            return false;
+        } else return true;
 
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-            }
-        }
     }
 
     @Override
