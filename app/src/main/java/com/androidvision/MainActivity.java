@@ -42,7 +42,6 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
