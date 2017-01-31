@@ -44,7 +44,8 @@ public class MainActivity extends Activity {
                     public void onClick(View v) {
                         switchCamera();
                         stopCamera();
-                        checkPermissions();
+                        if(checkPermission(Manifest.permission.CAMERA, MY_PERMISSIONS_REQUEST_CAMERA))
+                            startCamera();
                     }
                 }
         );
@@ -78,17 +79,6 @@ public class MainActivity extends Activity {
                     request);
             return false;
         } else return true;
-
-    }
-
-    private void checkPermissions() {
-
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA},
-                    MY_PERMISSIONS_REQUEST_CAMERA);
-        }
 
     }
 
