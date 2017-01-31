@@ -43,9 +43,10 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         switchCamera();
-                        stopCamera();
-                        if(checkPermission(Manifest.permission.CAMERA, MY_PERMISSIONS_REQUEST_CAMERA))
+                        if(checkPermission(Manifest.permission.CAMERA, MY_PERMISSIONS_REQUEST_CAMERA)) {
+                            stopCamera();
                             startCamera();
+                        }
                     }
                 }
         );
